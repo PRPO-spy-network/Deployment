@@ -1,0 +1,43 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: carconsumer-other
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: carconsumer-other
+  template:
+    metadata:
+      labels:
+        app: carconsumer-other
+    spec:
+      containers:
+        - name: carconsumer
+          image: armodilo/carconsumer:v1.0.1
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: "Development"
+            - name: TIMESCALE_CONN_STRING
+              valueFrom:
+                secretKeyRef:
+                  name: carconsumer-secrets
+                  key: TIMESCALE_CONN_STRING
+            - name: EVENT_HUBS_CONNECTION_STRING
+              valueFrom:
+                secretKeyRef:
+                  name: carconsumer-secrets
+                  key: EVENT_HUBS_CONNECTION_STRING
+            - name: BLOB_CONNECTION_STRING
+              valueFrom:
+                secretKeyRef:
+                  name: carconsumer-secrets
+                  key: BLOB_CONNECTION_STRING
+            - name: BLOB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: carconsumer-secrets
+                  key: BLOB_NAME
+            - name: REGION
+              value: "OTHER"

@@ -1,0 +1,44 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-controller
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - path: /car
+            pathType: Prefix
+            backend:
+              service:
+                name: locationapi
+                port:
+                  number: 80
+          - path: /swagger
+            pathType: Prefix
+            backend:
+              service:
+                name: carproducer
+                port:
+                  number: 80
+          - path: /registration
+            pathType: Prefix
+            backend:
+              service:
+                name: registrationapi
+                port:
+                  number: 80
+          - path: /location
+            pathType: Prefix
+            backend:
+              service:
+                name: carproducer
+                port:
+                  number: 80
+          - path: /kill
+            pathType: Prefix
+            backend:
+              service:
+                name: locationapi
+                port:
+                  number: 80
