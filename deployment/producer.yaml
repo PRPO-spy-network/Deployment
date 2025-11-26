@@ -15,17 +15,12 @@ spec:
     spec:
       containers:
         - name: carproducer
-          image: armodilo/carproducer:v1.0.5
+          image: armodilo/carproducer:v1.0.6
           ports:
             - containerPort: 8080
           env:
             - name: ASPNETCORE_ENVIRONMENT
               value: "Development"
-            - name: TIMESCALE_CONN_STRING
-              valueFrom:
-                secretKeyRef:
-                  name: carproducer-secrets
-                  key: TIMESCALE_CONN_STRING
             - name: EVENT_HUBS_CONN_STRING
               valueFrom:
                 secretKeyRef:
