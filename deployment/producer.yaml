@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: carproducer
-          image: armodilo/carproducer:v1.0.6
+          image: armodilo/carproducer:v1.0.7
           ports:
             - containerPort: 8080
           env:
