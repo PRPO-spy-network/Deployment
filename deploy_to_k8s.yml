@@ -1,0 +1,40 @@
+trigger:
+  tags:
+    include:
+      - "v*"
+
+pr: none
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  K8S_NAMESPACE: "default"
+
+stages:
+- stage: Deploy
+  displayName: "Deploy to AKS on tag"
+  jobs:
+    - job: ApplyManifests
+      displayName: "kubectl apply"
+      steps:
+
+      - checkout: self
+        fetchDepth: 0
+
+      - task: AzureCLI@2
+        displayName: "Set kubectl context to AKS"
+        inputs:
+          azureSubscription: "prpo-k8s-default-connection"
+          scriptType: bash
+          scriptLocation: inlineScript
+          inlineScript: |
+            az aks get-credentials \
+              --resource-group YOUR-RESOURCE-GROUP \
+              --name YOUR-AKS-CLUSTER \
+              --overwrite-existing
+
+      - script: |
+          echo "Applying Kubernetes manifests from ./deployment..."
+          kubectl apply -f ./deployment -n $K8S_NAMESPACE
+        displayName: "kubectl apply -f ./deployment"
