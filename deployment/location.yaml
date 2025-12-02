@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: locationapi
-          image: armodilo/locationapi:v1.0.4
+          image: armodilo/locationapi:v1.0.5
           ports:
             - containerPort: 8080
           env:

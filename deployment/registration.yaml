@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: registrationapi
-          image: armodilo/registrationapi:v1.0.7
+          image: armodilo/registrationapi:v1.0.8
           ports:
             - containerPort: 8080
           env:
