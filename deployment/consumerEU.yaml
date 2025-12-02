@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: carconsumer
-          image: armodilo/carconsumer:v1.0.1
+          image: armodilo/carconsumer:v1.0.2
           env:
             - name: ASPNETCORE_ENVIRONMENT
               value: "Development"
