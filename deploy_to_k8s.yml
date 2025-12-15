@@ -1,0 +1,33 @@
+trigger:
+  tags:
+    include:
+      - "v*"
+
+pr: none
+
+pool:
+  name: 'Default'
+
+variables:
+  K8S_NAMESPACE: "default"
+
+stages:
+- stage: Deploy
+  displayName: "Deploy to AKS on tag"
+  jobs:
+    - job: ApplyManifests
+      displayName: "kubectl apply"
+      steps:
+
+      - checkout: self
+        fetchDepth: 0
+
+      - task: Kubernetes@1
+        displayName: "Apply manifests to AKS"
+        inputs:
+          connectionType: "Kubernetes Service Connection"
+          kubernetesServiceEndpoint: "prpo-k8s-default-connection"
+          namespace: "$(K8S_NAMESPACE)"
+          command: apply
+          useConfigurationFile: true
+          configuration: "./deployment"
